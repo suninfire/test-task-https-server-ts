@@ -1,7 +1,7 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body } from '@nestjs/common';
 import { ApplicantService } from './applicant.service';
 import { CreateApplicantDto } from './dto/create-applicant.dto';
-import { UpdateApplicantDto } from './dto/update-applicant.dto';
+// import { UpdateApplicantDto } from './dto/update-applicant.dto';
 
 @Controller('applicant')
 export class ApplicantController {
@@ -9,26 +9,26 @@ export class ApplicantController {
 
   @Post()
   create(@Body() createApplicantDto: CreateApplicantDto) {
-    return this.applicantService.create(createApplicantDto);
+    return this.applicantService.createApplicant(createApplicantDto);
   }
 
   @Get()
   findAll() {
-    return this.applicantService.findAll();
+    return this.applicantService.findAllApplicants();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.applicantService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateApplicantDto: UpdateApplicantDto) {
-    return this.applicantService.update(+id, updateApplicantDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.applicantService.remove(+id);
-  }
+  // @Get(':id')
+  // findOne(@Param('id') id: string) {
+  //   return this.applicantService.findOne(+id);
+  // }
+  //
+  // @Patch(':id')
+  // update(@Param('id') id: string, @Body() updateApplicantDto: UpdateApplicantDto) {
+  //   return this.applicantService.update(+id, updateApplicantDto);
+  // }
+  //
+  // @Delete(':id')
+  // remove(@Param('id') id: string) {
+  //   return this.applicantService.remove(+id);
+  // }
 }
