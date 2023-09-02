@@ -8,5 +8,6 @@ import { Applicant } from './applicant.model';
   imports: [SequelizeModule.forFeature([Applicant])],
   controllers: [ApplicantController],
   providers: [ApplicantService],
+  exports: [ApplicantService,SequelizeModule]
 })
 export class ApplicantModule {}
