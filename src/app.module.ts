@@ -9,6 +9,7 @@ import { ApplicantModule } from './applicant/applicant.module';
 import { Applicant } from './applicant/applicant.model';
 
 import { PositionModule } from './position/position.module';
+import { Position } from './position/position.model';
 
 @Module({
   imports: [
@@ -24,7 +25,7 @@ import { PositionModule } from './position/position.module';
       username: process.env.POSTGRES_USER,
       password: process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_NAME,
-      models: [Applicant],
+      models: [Applicant, Position],
     }),
   ],
 

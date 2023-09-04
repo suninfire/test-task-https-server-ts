@@ -1,4 +1,13 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
+
 import { PositionService } from './position.service';
 import { CreatePositionDto } from './dto/create-position.dto';
 import { UpdatePositionDto } from './dto/update-position.dto';
@@ -9,26 +18,29 @@ export class PositionController {
 
   @Post()
   create(@Body() createPositionDto: CreatePositionDto) {
-    return this.positionService.create(createPositionDto);
+    return this.positionService.createPosition(createPositionDto);
   }
 
   @Get()
   findAll() {
-    return this.positionService.findAll();
+    return this.positionService.findAllPositions();
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.positionService.findOne(+id);
+    return this.positionService.findOnePositionById(+id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePositionDto: UpdatePositionDto) {
-    return this.positionService.update(+id, updatePositionDto);
+  update(
+    @Param('id') id: string,
+    @Body() updatePositionDto: UpdatePositionDto,
+  ) {
+    return this.positionService.updatePosition(+id, updatePositionDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.positionService.remove(+id);
+    return this.positionService.deletePosition(+id);
   }
 }

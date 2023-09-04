@@ -1,26 +1,61 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/sequelize';
+
 import { CreatePositionDto } from './dto/create-position.dto';
 import { UpdatePositionDto } from './dto/update-position.dto';
+import { Position } from './position.model';
 
 @Injectable()
 export class PositionService {
-  create(createPositionDto: CreatePositionDto) {
-    return 'This action adds a new position';
+  constructor(
+    @InjectModel(Position) private positionRepository: typeof Position,
+  ) {}
+  async createPosition(position: CreatePositionDto) {
+    const newPosition = await this.positionRepository.create(position);
+    return newPosition;
   }
 
-  findAll() {
-    return `This action returns all position`;
+  async findAllPositions() {
+    return await this.positionRepository.findAll();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} position`;
+  async findOnePositionById(id: number) {
+    const position = await this.positionRepository.findOne({
+      where: { id: id },
+    });
+    return position;
   }
 
-  update(id: number, updatePositionDto: UpdatePositionDto) {
-    return `This action updates a #${id} position`;
+  async updatePosition(id: number, position: UpdatePositionDto) {
+    const { company, description, categories, japaneseKnowledge, level } =
+      position;
+    const updatedPosition = await this.positionRepository.update(
+      {
+        company,
+        description,
+        categories,
+        level,
+        japaneseKnowledge,
+      },
+      {
+        where: { id: id },
+      },
+    );
+    return updatedPosition;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} position`;
+  async deletePosition(id: number) {
+    const position = await this.positionRepository.findOne({
+      where: { id: id },
+    });
+    if (!position) {
+      throw new BadRequestException({
+        message: `Position with id ${id} not found`,
+      });
+    }
+    const deletedPosition = await this.positionRepository.destroy({
+      where: { id: id },
+    });
+    return deletedPosition;
   }
 }
